@@ -34,19 +34,21 @@ jobs:
       # so the deployed build matches the one that was tested locally.
       - run: npm ci
 
+      # Runs before the build because it reports where this site will
+      # actually be served from: '/<repo>/' for a project site, '/' for a
+      # <user>.github.io repo or a custom domain. The build needs that
+      # prefix baked into every asset URL, so it has to be known first.
+      - uses: actions/configure-pages@v5
+        id: pages
+
       # tsc -b runs as part of build, so a type error stops the deploy
       # rather than shipping.
       - name: Build
         run: npm run build
         env:
-          # '/' is correct for a custom domain (the CNAME below) and for a
-          # <user>.github.io repo. For a project site served from
-          # https://<user>.github.io/<repo>/, add a repository variable
-          # VITE_BASE with the value /<repo>/ — Settings → Secrets and
-          # variables → Actions → Variables.
-          VITE_BASE: ${{ vars.VITE_BASE || '/' }}
-
-      - uses: actions/configure-pages@v5
+          # Set a VITE_BASE repository variable only to override the
+          # detected path; normally there is nothing to configure.
+          VITE_BASE: ${{ vars.VITE_BASE || steps.pages.outputs.base_path }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

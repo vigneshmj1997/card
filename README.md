@@ -62,51 +62,32 @@ Indian wedding (kanjeevaram purple, temple gold, marigold).
 
 ## Deploying
 
-Two routes are set up. Pick one — running both means two places serving
-the same domain.
-
-### GitHub Pages (no server to run)
-
 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds and
-publishes on every push to `main`. Once:
+publishes to GitHub Pages on every push to `main` — `npm ci`, `tsc -b`,
+`vite build`, then the `dist/` output is uploaded and deployed. A type
+error fails the run and leaves the live site on the previous version
+rather than publishing a broken one.
 
-1. Push the repo to GitHub.
-2. **Settings → Pages → Source: GitHub Actions.**
-3. Point DNS at GitHub — a `CNAME` record for `marriage` →
-   `<user>.github.io`.
-4. **Settings → Pages → Custom domain:** `marriage.automatebrains.com`,
-   then tick **Enforce HTTPS** once the check passes.
+Three one-time steps:
+
+1. Push the repo to GitHub, on a branch named `main`.
+2. **Settings → Pages → Source: GitHub Actions.** Without this the build
+   succeeds and the deploy step fails.
+3. **DNS:** a `CNAME` record for `marriage` → `<user>.github.io`, then
+   **Settings → Pages → Custom domain:** `marriage.automatebrains.com`,
+   and tick **Enforce HTTPS** once the check passes.
 
 The domain lives in [`public/CNAME`](public/CNAME); delete that file to
-serve from the `github.io` URL instead. Pages issues and renews its own
-certificate, so nothing else is needed for HTTPS.
+serve from the `github.io` URL instead. Pages issues and renews the
+certificate itself.
 
 For a project site served from `https://<user>.github.io/<repo>/`, add a
 repository variable `VITE_BASE` = `/<repo>/` (Settings → Secrets and
 variables → Actions → Variables). Every asset path is resolved against
-it, photographs included.
+it, photographs included — see [`src/lib/asset.ts`](src/lib/asset.ts).
 
-### Docker, on your own server
-
-[`Dockerfile`](Dockerfile) builds the site and serves it from nginx;
-[`docker-compose.yml`](docker-compose.yml) adds certbot, which gets a
-Let's Encrypt certificate for the domain and renews it. On the server,
-with the DNS A record already pointing at it and ports 80 and 443 open:
-
-```bash
-docker compose build
-CERTBOT_EMAIL=you@example.com ./scripts/init-letsencrypt.sh
-docker compose up -d
-```
-
-The init script exists because of a deadlock: nginx will not start
-without a certificate, and certbot cannot get one until nginx is
-answering on port 80. It issues a throwaway self-signed certificate,
-starts nginx, swaps in the real one and reloads. Run it once. After that,
-certbot re-checks twice a day and nginx reloads twice a day to pick up
-anything renewed. Set `STAGING=1` for a dry run against Let's Encrypt's
-staging environment — its rate limits are far more forgiving than the
-five-failures-an-hour of the real one.
+Pages needs a paid plan if the repository is private; public repos are
+fine on the free tier.
 
 ## Wiring up the RSVP
 
