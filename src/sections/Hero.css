@@ -1,0 +1,301 @@
+.hero {
+  position: relative;
+  /* Tall enough to give the scroll-scrubbed camera room to travel. */
+  min-height: 190dvh;
+  isolation: isolate;
+}
+
+/* Painted sky — sits behind the WebGL layer and carries the colour
+   even before three.js has finished loading. */
+.hero__sky {
+  position: absolute;
+  inset: -10% 0 0;
+  z-index: var(--z-canvas);
+  background:
+    radial-gradient(
+      120% 80% at 72% 18%,
+      rgba(255, 226, 168, 0.9) 0%,
+      rgba(255, 226, 168, 0) 55%
+    ),
+    linear-gradient(
+      180deg,
+      #7cb9dd 0%,
+      #a9d6ec 32%,
+      #d8ecf6 58%,
+      var(--color-background) 88%
+    );
+  will-change: transform;
+}
+
+/* The sticky viewport: canvas and copy travel together and unstick
+   together at the end of the hero. */
+.hero__viewport {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__birds {
+  position: absolute;
+  top: 16%;
+  left: 8%;
+  z-index: 2;
+  width: clamp(90px, 12vw, 170px);
+  color: #4a5f6b;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Copy sits centred over the canvas. */
+.hero__content {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-content);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* Reserve the fixed nav at the top. Without this the column centres
+     against the full viewport and pushes its first line under the bar —
+     off-screen entirely on shorter laptops. */
+  padding-top: calc(var(--nav-h) + var(--space-2));
+  padding-bottom: var(--space-3);
+  pointer-events: none;
+}
+
+/* A soft cream scrim behind the copy. Text contrast must not depend on
+   which part of the moving 3D scene happens to be behind it. */
+.hero__content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  /* Kept narrow — wide enough to sit under the copy column, tight
+     enough to leave the scenery on either side at full saturation. */
+  background: radial-gradient(
+    46% 54% at 50% 48%,
+    rgba(251, 243, 228, 0.94) 0%,
+    rgba(251, 243, 228, 0.78) 42%,
+    rgba(251, 243, 228, 0) 76%
+  );
+  pointer-events: none;
+}
+
+/* Re-enable pointer events only on the things you can actually click. */
+.hero__content a,
+.hero__content button {
+  pointer-events: auto;
+}
+
+.hero__invite {
+  max-width: 30ch;
+  font-size: var(--text-base);
+  font-style: italic;
+  color: var(--color-foreground);
+  text-shadow: 0 1px 12px rgba(255, 250, 240, 0.9);
+}
+
+.hero__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  /* Vertical rhythm here is height-relative so the whole column
+     compresses on short viewports instead of overflowing. */
+  margin-block: clamp(0.25rem, 1.5vh, 1rem);
+  font-weight: 400;
+}
+
+.hero__name {
+  font-size: var(--text-display);
+  color: var(--color-primary);
+  /* Great Vibes has long descenders; keep them off the next line. */
+  line-height: 1.05;
+  padding-inline: 0.08em;
+  text-shadow: 0 2px 20px rgba(255, 250, 240, 0.85);
+}
+
+.hero__amp {
+  display: grid;
+  place-items: center;
+  margin-block: -0.35em;
+}
+
+.hero__thaali {
+  width: clamp(48px, 7vw, 76px);
+  color: var(--color-accent);
+}
+
+.hero__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__kolam {
+  width: min(320px, 70vw);
+  margin-bottom: clamp(0.35rem, 1.2vh, 1rem);
+  color: var(--color-accent);
+}
+
+.hero__date {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: var(--text-lg);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--color-foreground);
+  text-shadow: 0 1px 12px rgba(255, 250, 240, 0.9);
+}
+
+.hero__dot {
+  color: var(--color-accent);
+}
+
+.hero__blessing {
+  margin-top: clamp(0.35rem, 1.2vh, 1rem);
+  font-size: var(--text-xl);
+  /* Deepened from the token green — this sits over the brightest part
+     of the scrim and needs to clear 4.5:1 on its own. */
+  color: #1f4531;
+  text-shadow: 0 1px 12px rgba(255, 250, 240, 0.9);
+}
+
+.hero__blessing-translit {
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: #5b4636;
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  /* Comfortably above the 44px minimum target. */
+  min-height: 52px;
+  padding: 0.9rem 2.25rem;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
+  transition:
+    background-color var(--dur-base) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+
+.hero__cta:hover {
+  background: var(--color-primary-soft);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.hero__cta:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.hero__scroll-hint {
+  position: absolute;
+  bottom: var(--space-3);
+  left: 50%;
+  translate: -50% 0;
+  z-index: var(--z-content);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.hero__scroll-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-accent),
+    transparent
+  );
+  animation: scroll-pulse 2.4s var(--ease-in-out) infinite;
+  transform-origin: top;
+}
+
+@keyframes scroll-pulse {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* Short viewports — a landscape phone, or a small laptop window. There
+   is not room for everything, so drop the two lines that are context
+   rather than information. The names, date, countdown and CTA stay. */
+@media (max-height: 700px) {
+  .hero__invite,
+  .hero__blessing-translit {
+    display: none;
+  }
+
+  .hero__content {
+    padding-top: calc(var(--nav-h) + var(--space-1));
+  }
+
+  .countdown__unit {
+    padding-block: 0.4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 170dvh;
+  }
+
+  .hero__birds {
+    top: 12%;
+    left: 4%;
+  }
+
+  /* The date wraps onto two lines here, which would leave the separator
+     stranded at the end of the first one. */
+  .hero__dot {
+    display: none;
+  }
+
+  .hero__date {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  /* Not enough vertical room for the hint below the CTA — it would sit
+     on top of it rather than under it. */
+  .hero__scroll-hint {
+    display: none;
+  }
+}

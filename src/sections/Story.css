@@ -1,0 +1,143 @@
+.story {
+  position: relative;
+  padding-block: var(--space-6);
+  background:
+    linear-gradient(
+      180deg,
+      var(--color-background) 0%,
+      var(--color-background-alt) 45%,
+      var(--color-background) 100%
+    );
+}
+
+.story__list {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* The vertical rail the chapter nodes sit on. */
+.story__list::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  translate: -50% 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-border-strong) 8%,
+    var(--color-border-strong) 92%,
+    transparent
+  );
+}
+
+.chapter {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.chapter--flipped .chapter__art {
+  order: 2;
+}
+
+.chapter__art {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
+  /* Reserve the box before the SVG paints so nothing shifts. */
+  aspect-ratio: 4 / 3;
+  will-change: transform;
+}
+
+.chapter__scene {
+  width: 100%;
+  height: 100%;
+}
+
+.chapter__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.chapter__year {
+  font-family: var(--font-script);
+  font-size: var(--text-2xl);
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+.chapter__title {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+
+.chapter__text {
+  max-width: 46ch;
+  font-size: var(--text-lg);
+  color: var(--color-muted-foreground);
+}
+
+/* Node on the rail */
+.chapter__node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--color-gold);
+  border: 3px solid var(--color-background);
+  box-shadow: 0 0 0 2px var(--color-border-strong);
+}
+
+.story__lotus {
+  width: clamp(88px, 12vw, 140px);
+  margin: var(--space-4) auto 0;
+}
+
+@media (max-width: 900px) {
+  .story__list::before {
+    left: 10px;
+  }
+
+  /* The rail runs down the left edge on mobile, so the lotus that caps
+     it must sit on the rail, not in the middle of the column. */
+  .story__lotus {
+    margin-left: calc(10px - clamp(88px, 12vw, 140px) / 2);
+  }
+
+  .chapter {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    padding-left: var(--space-4);
+  }
+
+  /* Art always leads on mobile — alternating sides has no meaning
+     in a single column. */
+  .chapter--flipped .chapter__art {
+    order: 0;
+  }
+
+  .chapter__node {
+    top: 0.6rem;
+    left: 10px;
+  }
+
+  .chapter__text {
+    max-width: none;
+  }
+}

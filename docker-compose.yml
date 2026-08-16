@@ -1,0 +1,52 @@
+# marriage.automatebrains.com
+#
+#   docker compose build
+#   ./scripts/init-letsencrypt.sh     # once, to get the first certificate
+#   docker compose up -d
+#
+# The two containers share a pair of volumes: certbot writes certificates
+# and challenge files, nginx reads them.
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: wedding-site:latest
+    container_name: wedding-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # Read-only: nginx has no business writing to either of these.
+      - certbot-conf:/etc/letsencrypt:ro
+      - certbot-www:/var/www/certbot:ro
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1/.well-known/acme-challenge/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  certbot:
+    image: certbot/certbot:latest
+    container_name: wedding-certbot
+    restart: unless-stopped
+    volumes:
+      - certbot-conf:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+    # Certificates last 90 days; Let's Encrypt renews them at 30 days
+    # left. Waking twice a day means a failed attempt has ~60 chances to
+    # succeed before anything expires. `renew` is a no-op until then, so
+    # this cannot trip the rate limit.
+    entrypoint: >
+      sh -c "trap exit TERM;
+             while :; do
+               certbot renew --webroot -w /var/www/certbot --quiet;
+               sleep 12h & wait $${!};
+             done"
+
+volumes:
+  certbot-conf:
+  certbot-www:

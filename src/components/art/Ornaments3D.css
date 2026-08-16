@@ -1,0 +1,28 @@
+/* CSS 3D stage for the dimensional ornaments.
+   The perspective lives on the wrapper and the rotation on the child —
+   putting both on one element flattens the effect. */
+
+.spin3d {
+  perspective: 700px;
+  perspective-origin: 50% 45%;
+  pointer-events: none;
+}
+
+.spin3d__inner {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* A hung object pivots from the point it is hung by, not from its
+   middle — otherwise the chain swings as much as the bell does. */
+.spin3d--hang .spin3d__inner {
+  transform-origin: 50% 3%;
+}
+
+.spin3d__inner > svg {
+  width: 100%;
+  height: auto;
+  /* A drop shadow that stays put while the object turns reinforces
+     that it is a solid sitting in space. */
+  filter: drop-shadow(0 8px 14px rgba(51, 36, 26, 0.16));
+}

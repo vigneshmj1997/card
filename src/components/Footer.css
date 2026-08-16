@@ -1,0 +1,98 @@
+.footer {
+  position: relative;
+  padding-top: var(--space-7);
+  padding-bottom: var(--space-4);
+  background: var(--color-background-alt);
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Hills rise out of the top edge, closing the frame the hero opened. */
+.footer__hills {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: clamp(90px, 14vw, 170px);
+  color: var(--color-secondary);
+  opacity: 0.18;
+  rotate: 180deg;
+  pointer-events: none;
+}
+
+/* The bells hang from the top edge of the footer, outside the text
+   column. Under 900px the column reaches the full width, so they would
+   swing over the names — at that point they go. */
+.footer__bell {
+  position: absolute;
+  top: -8px;
+  width: clamp(52px, 6vw, 74px);
+}
+
+.footer__bell--left {
+  left: clamp(1rem, 7vw, 5rem);
+}
+
+.footer__bell--right {
+  right: clamp(1rem, 7vw, 5rem);
+}
+
+@media (max-width: 900px) {
+  .footer__bell {
+    display: none;
+  }
+}
+
+.footer__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.footer__lamps {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.footer__lamp {
+  width: 34px;
+  color: var(--color-accent);
+}
+
+.footer__lamp--tall {
+  width: 46px;
+}
+
+.footer__names {
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  line-height: 1.1;
+  color: var(--color-primary);
+}
+
+.footer__kolam {
+  width: min(320px, 70vw);
+  color: var(--color-accent);
+}
+
+.footer__meta {
+  font-size: var(--text-base);
+  color: var(--color-muted-foreground);
+}
+
+.footer__blessing {
+  margin-top: var(--space-2);
+  font-size: var(--text-xl);
+  color: var(--color-secondary);
+}
+
+.footer__hashtag {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+}

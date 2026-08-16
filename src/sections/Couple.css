@@ -1,0 +1,181 @@
+.couple {
+  padding-block: var(--space-6);
+  background: var(--color-background);
+}
+
+/* Sits between the section heading and the pair of portraits. */
+.couple__garland {
+  width: clamp(110px, 14vw, 170px);
+  margin: 0 auto var(--space-4);
+}
+
+/* The WebGL lamp. The height is fixed here rather than by the canvas, so
+   the space is held from first paint and the lazy chunk cannot shift the
+   RSVP button out from under a thumb. */
+.couple__lamp {
+  height: clamp(280px, 34vw, 420px);
+  margin-top: var(--space-5);
+}
+
+.lamp3d {
+  width: 100%;
+  height: 100%;
+}
+
+.couple__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(2rem, 6vw, 5rem);
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.portrait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  /* The perspective container — the tilt lives on the child. */
+  perspective: 1000px;
+}
+
+.portrait__card {
+  width: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.portrait__frame {
+  position: relative;
+  padding: 14px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.portrait__media {
+  position: relative;
+  /* Reserve the aspect ratio so the lazy image can't shift the layout. */
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-background-alt);
+}
+
+.portrait__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portrait__placeholder {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 100%;
+}
+
+.portrait__placeholder svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portrait__placeholder-text {
+  position: relative;
+  text-align: center;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--color-foreground);
+  background: rgba(255, 250, 240, 0.9);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+}
+
+.portrait__placeholder-text code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  color: var(--color-primary);
+}
+
+/* Kolam corners, tucked into the frame's edges */
+.portrait__corner {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  color: var(--color-gold);
+  opacity: 0.85;
+}
+
+.portrait__corner--tl {
+  top: 4px;
+  left: 4px;
+}
+
+.portrait__corner--tr {
+  top: 4px;
+  right: 4px;
+  scale: -1 1;
+}
+
+.portrait__corner--bl {
+  bottom: 4px;
+  left: 4px;
+  scale: 1 -1;
+}
+
+.portrait__corner--br {
+  bottom: 4px;
+  right: 4px;
+  scale: -1 -1;
+}
+
+/* Pushed toward the viewer so the tilt separates it from the card face. */
+.portrait__flower {
+  position: absolute;
+  right: -22px;
+  bottom: -18px;
+  width: 76px;
+  color: var(--color-marigold);
+  transform: translateZ(45px);
+  filter: drop-shadow(0 6px 12px rgba(51, 36, 26, 0.18));
+}
+
+.portrait__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+}
+
+.portrait__name {
+  font-size: clamp(2rem, 4.5vw, 2.75rem);
+  color: var(--color-primary);
+  line-height: 1.15;
+}
+
+.portrait__parents {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.portrait__bio {
+  max-width: 38ch;
+  font-size: var(--text-base);
+  color: var(--color-muted-foreground);
+}
+
+@media (max-width: 640px) {
+  .portrait__flower {
+    width: 58px;
+    right: -14px;
+    bottom: -12px;
+  }
+}

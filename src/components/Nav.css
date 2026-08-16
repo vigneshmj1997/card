@@ -1,0 +1,145 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  transition:
+    background-color var(--dur-slow) var(--ease-out),
+    box-shadow var(--dur-slow) var(--ease-out),
+    border-color var(--dur-slow) var(--ease-out);
+  border-bottom: 1px solid transparent;
+}
+
+/* Over the hero the bar is glass; past it, solid paper. */
+.nav--solid {
+  background: rgba(251, 243, 228, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: 64px;
+  padding-block: 0.5rem;
+}
+
+.nav__brand {
+  font-size: 1.75rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 8px rgba(255, 250, 240, 0.8);
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 0.9rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-foreground);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  text-shadow: 0 1px 8px rgba(255, 250, 240, 0.8);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0.9rem;
+  right: 0.9rem;
+  bottom: 0.4rem;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.nav__link:hover {
+  color: var(--color-primary);
+}
+
+.nav__link:hover::after,
+.nav__link.is-active::after {
+  transform: scaleX(1);
+}
+
+/* Current location carries weight and colour, not just an underline. */
+.nav__link.is-active {
+  color: var(--color-primary);
+}
+
+.nav__toggle {
+  display: none;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 250, 240, 0.85);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.nav__sheet {
+  background: rgba(251, 243, 228, 0.98);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+.nav__sheet-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0.5rem 0 1rem;
+  list-style: none;
+}
+
+.nav__sheet-link {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 0.75rem clamp(1.25rem, 5vw, 3rem);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--color-foreground);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+}
+
+.nav__sheet-link.is-active {
+  color: var(--color-primary);
+  font-weight: 600;
+  border-left-color: var(--color-accent);
+  background: rgba(217, 165, 32, 0.08);
+}
+
+@media (max-width: 900px) {
+  .nav__desktop {
+    display: none;
+  }
+
+  .nav__toggle {
+    display: grid;
+  }
+}

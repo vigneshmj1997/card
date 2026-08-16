@@ -1,0 +1,195 @@
+.events {
+  position: relative;
+  padding-block: var(--space-6);
+  background: var(--color-background-alt);
+  overflow: hidden;
+}
+
+/* Oversized banana leaves bleeding off both edges */
+.events__leaf {
+  position: absolute;
+  top: 8%;
+  width: clamp(120px, 16vw, 240px);
+  color: var(--color-secondary);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.events__leaf--left {
+  left: -6%;
+  rotate: -14deg;
+}
+
+.events__leaf--right {
+  right: -6%;
+  top: 42%;
+  rotate: 168deg;
+}
+
+.events__kumbhams {
+  display: flex;
+  justify-content: center;
+  gap: clamp(3rem, 14vw, 9rem);
+  margin-bottom: var(--space-3);
+}
+
+.events__kumbham {
+  width: clamp(64px, 9vw, 100px);
+}
+
+.events__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.event {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-3) var(--space-3);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--event-hue, var(--color-primary));
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+
+.event:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Per-event accent, set once and reused by the ribbon and border. */
+.event--marigold {
+  --event-hue: var(--color-marigold);
+}
+.event--purple {
+  --event-hue: var(--color-primary);
+}
+.event--green {
+  --event-hue: var(--color-secondary);
+}
+.event--gold {
+  --event-hue: var(--color-accent);
+}
+
+.event__ribbon {
+  position: absolute;
+  top: -1px;
+  right: var(--space-3);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 46px;
+  background: var(--event-hue);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+}
+
+.event__index {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fffaf0;
+  translate: 0 -4px;
+}
+
+.event__head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-right: 3.5rem;
+}
+
+.event__name {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+
+.event__native {
+  font-family: var(--font-script);
+  font-size: var(--text-xl);
+  line-height: 1.2;
+  color: var(--event-hue);
+}
+
+.event__description {
+  font-size: var(--text-base);
+  color: var(--color-muted-foreground);
+}
+
+.event__details {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--color-border);
+}
+
+.event__detail {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.event__detail-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-muted-foreground);
+}
+
+.event__icon {
+  flex-shrink: 0;
+  color: var(--event-hue);
+}
+
+.event__detail-value {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--color-foreground);
+  /* Long venue names must reflow, not overflow the card. */
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.events__note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: 62ch;
+  margin: var(--space-5) auto 0;
+  padding: var(--space-3);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  font-style: italic;
+  color: var(--color-foreground);
+}
+
+.events__lamp {
+  flex-shrink: 0;
+  width: 34px;
+  color: var(--color-accent);
+}
+
+@media (max-width: 480px) {
+  .event__detail {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+}
