@@ -33,6 +33,12 @@
 
   --color-ring: #4b2e72;
 
+  /* --- Temple & invitation card --- */
+  --color-maroon: #4a0d12; /* the lamp-lit hall */
+  --color-kumkum: #a3161d; /* kungumam red — 7:1 on card paper */
+  --color-manjal: #f2c230; /* turmeric — decorative only */
+  --color-paper: #fff4d6; /* invitation card stock */
+
   /* --- Typography --- */
   --font-script: "Great Vibes", "Segoe Script", cursive;
   --font-serif: "Cormorant Infant", Georgia, "Times New Roman", serif;
@@ -108,7 +114,8 @@ html {
 body {
   margin: 0;
   min-height: 100dvh;
-  background-color: var(--color-background);
+  /* The page ends in the temple hall; overscroll should too. */
+  background-color: var(--color-maroon);
   color: var(--color-foreground);
   font-family: var(--font-serif);
   font-size: var(--text-base);

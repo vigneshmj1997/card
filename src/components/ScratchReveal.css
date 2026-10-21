@@ -1,0 +1,84 @@
+.scratch {
+  position: relative;
+  display: grid;
+  border-radius: var(--radius-md);
+  isolation: isolate;
+}
+
+.scratch__content {
+  border-radius: inherit;
+}
+
+.scratch__content:focus {
+  outline: none;
+}
+
+.scratch__content:focus-visible {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 4px;
+}
+
+.scratch__foil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  cursor: grab;
+  /* Dragging on the foil scratches it; it must not scroll the page. */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+}
+
+.scratch__foil:active {
+  cursor: grabbing;
+}
+
+.scratch__foil:focus-visible {
+  outline-offset: 4px;
+}
+
+/* A glint that crosses the untouched foil, to say "this is foil — rub it". */
+.scratch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  background: linear-gradient(
+      105deg,
+      transparent 35%,
+      rgba(255, 252, 232, 0.6) 48%,
+      transparent 60%
+    )
+    0 0 / 250% 100% no-repeat;
+  animation: scratch-glint 3.6s var(--ease-in-out) infinite;
+  pointer-events: none;
+}
+
+.scratch--started::after,
+.scratch--revealed::after {
+  content: none;
+}
+
+@keyframes scratch-glint {
+  0%,
+  35% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+.scratch--revealed .scratch__foil {
+  opacity: 0;
+  transform: scale(1.06);
+  pointer-events: none;
+}

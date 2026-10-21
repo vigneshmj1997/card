@@ -1,7 +1,10 @@
 # Wedding site
 
-A South Indian wedding invitation site — Ghibli-styled illustration, a
-WebGL hero, and scroll-driven motion throughout.
+A Tamil wedding invitation you walk into. The page opens on a temple
+gopuram; scrolling swings its doors open and carries you through them
+into the lamp-lit hall, where the invitation card is hanging — mango
+leaves across the top, the date under scratch-off gold foil, and the
+venue with a Google Maps link at the bottom.
 
 ```bash
 npm install
@@ -23,17 +26,24 @@ expected filenames and sizes. Missing images fall back to illustrated
 placeholders instead of breaking, so the site is shareable before the
 photos are ready.
 
-## Sections
+## The page
 
 | Section | What it does |
 |---|---|
-| Hero | WebGL valley, gopuram, drifting clouds and petals; camera scrubs on scroll. Countdown to the muhurtham. |
-| Our Story | Alternating timeline; illustrated vignette per chapter, parallaxed against the copy. |
-| The Couple | Portrait cards that tilt in 3D toward the pointer, a turning marigold garland, and a WebGL brass lamp with five lit wicks. |
-| Celebrations | The five ceremonies, each with date, time, venue and dress code. |
-| Moments | Photographs on a rotating 3D ring, with prev/next, pause and arrow-key control. |
-| Travel & Stay | Venue, directions, where to stay. |
-| RSVP | Validated form with an error summary and focus management. |
+| Temple entrance ([`TempleEntrance.tsx`](src/sections/TempleEntrance.tsx)) | A seven-tier gopuram at dawn, between kaavi-striped walls, with banana trees and a thoranam at the door and a kolam on the ground. The section is pinned for three screens of scroll: the teak doors swing in, the view zooms through the doorway toward the sanctum lamp, a flash of lamplight, then the dim hall. |
+| Invitation ([`Invitation.tsx`](src/sections/Invitation.tsx)) | The card, hung between carved pillars and swinging bells: a swaying mango-leaf thoranam, turmeric and kumkum on the corners, a purna kumbham between two lamps, *Vignesh weds Shalini*, the date under scratch-off foil, and the venue with an *Open in Google Maps* button. |
+
+The date under the foil is formatted from `wedding.muhurthamISO`, in
+India time, so guests abroad see the date printed on the paper card.
+The time is shown only once `wedding.muhurthamTimeFixed` is `true`, and
+the venue address only once `venue.addressLines` has lines in it.
+The foil ([`ScratchReveal.tsx`](src/components/ScratchReveal.tsx))
+clears once about half of it is scratched; it is also a button, so
+Enter, Space or a screen reader's activate gesture reveals it outright.
+
+The earlier sections (story, couple, events, gallery, travel, RSVP) are
+still in [`src/sections/`](src/sections/) but are not rendered. Import
+one into [`App.tsx`](src/App.tsx) below `<Invitation />` to bring it back.
 
 ## The artwork
 

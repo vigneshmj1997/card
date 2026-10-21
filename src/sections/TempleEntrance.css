@@ -1,0 +1,248 @@
+.entrance {
+  /* The gopuram is sized by height, but never wider than a phone can
+     show — at 0.6 wide to 1 tall, 150vw of height is 90vw of width. */
+  --gopuram-h: min(78dvh, 150vw);
+  --gopuram-w: calc(var(--gopuram-h) * 0.6);
+  --ground-h: 9dvh;
+
+  position: relative;
+  /* Three screens of scroll to walk from the gate into the hall. */
+  height: 400dvh;
+  background: var(--color-maroon);
+}
+
+.entrance--still {
+  height: 100dvh;
+}
+
+.entrance__viewport {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Early morning: gold low on the horizon, the sun up behind the tower. */
+.entrance__sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 50% 24%,
+      rgba(255, 251, 232, 1) 0%,
+      rgba(255, 233, 176, 0.85) 9%,
+      rgba(255, 214, 140, 0) 34%
+    ),
+    linear-gradient(180deg, #f3a35c 0%, #f8c88a 30%, #fde3b8 62%, #fdf0d8 100%);
+}
+
+.entrance__birds {
+  position: absolute;
+  top: 14%;
+  left: 9%;
+  width: clamp(80px, 11vw, 150px);
+  color: #6b3a22;
+  opacity: 0.5;
+  animation: entrance-birds 14s ease-in-out infinite alternate;
+}
+
+@keyframes entrance-birds {
+  to {
+    transform: translate(6vw, -2vh);
+  }
+}
+
+/* Everything that zooms as you walk in. */
+.entrance__world {
+  position: absolute;
+  inset: 0;
+}
+
+.entrance__palm {
+  position: absolute;
+  bottom: calc(var(--ground-h) + var(--gopuram-h) * 0.12);
+  width: calc(var(--gopuram-h) * 0.36);
+  color: #5a5a30;
+  opacity: 0.75;
+}
+
+.entrance__palm--left {
+  right: calc(50% + var(--gopuram-w) * 0.52);
+}
+
+.entrance__palm--right {
+  left: calc(50% + var(--gopuram-w) * 0.52);
+  transform: scaleX(-1);
+}
+
+/* The compound wall, in the red-and-white kaavi stripes painted on
+   every temple wall in Tamil Nadu. */
+.entrance__wall {
+  --stripe: calc(var(--gopuram-h) * 0.028);
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--ground-h);
+  height: calc(var(--gopuram-h) * 0.2);
+  background:
+    linear-gradient(180deg, rgba(60, 20, 0, 0.18), transparent 30%),
+    repeating-linear-gradient(
+      90deg,
+      #b33a25 0 var(--stripe),
+      #f4e9d6 var(--stripe) calc(var(--stripe) * 2)
+    );
+}
+
+/* Coping along the top of the wall. */
+.entrance__wall::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: calc(var(--gopuram-h) * 0.022);
+  background: linear-gradient(180deg, #efe2c8, #c9b490);
+  box-shadow: 0 3px 6px rgba(60, 20, 0, 0.25);
+}
+
+.entrance__ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--ground-h);
+  background:
+    linear-gradient(180deg, rgba(60, 25, 5, 0.28), transparent 35%),
+    linear-gradient(180deg, #c5a57d, #a7865f);
+}
+
+/* Drawn flat, then laid down on the ground in perspective. */
+.entrance__kolam {
+  position: absolute;
+  left: 50%;
+  top: 12%;
+  width: calc(var(--gopuram-w) * 0.52);
+  transform: translateX(-50%) scaleY(0.36);
+  transform-origin: 50% 0;
+  opacity: 0.9;
+}
+
+.entrance__spill {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: calc(var(--gopuram-w) * 0.5);
+  height: var(--ground-h);
+  transform: translateX(-50%);
+  background: radial-gradient(
+    60% 100% at 50% 0%,
+    rgba(255, 210, 120, 0.85),
+    rgba(255, 180, 80, 0) 100%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Centred with auto margins rather than a transform: the zoom reads
+   this box's offsetLeft, and a translate would not show up in it. */
+.entrance__gate {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--ground-h);
+  width: var(--gopuram-w);
+  height: var(--gopuram-h);
+  margin-inline: auto;
+}
+
+.entrance__gopuram {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 6px 18px rgba(80, 30, 0, 0.25));
+}
+
+.entrance__flash,
+.entrance__dusk {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.entrance__flash {
+  background: radial-gradient(
+    circle at 50% 50%,
+    #fff3cf 0%,
+    #ffcf76 35%,
+    #e98a2f 75%,
+    #b4521f 100%
+  );
+}
+
+/* Ends on exactly the colour the invitation hall begins on, so the seam
+   between the two sections cannot be seen. */
+.entrance__dusk {
+  background: var(--color-maroon);
+}
+
+.entrance__welcome {
+  position: absolute;
+  top: max(1.25rem, 2.5dvh);
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: var(--color-maroon);
+  pointer-events: none;
+}
+
+.entrance__welcome-title {
+  font-size: clamp(2.4rem, 6.5dvh, 3.6rem);
+  line-height: 1.1;
+  text-shadow: 0 1px 14px rgba(255, 246, 220, 0.9);
+}
+
+.entrance__welcome-line {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 10px rgba(255, 246, 220, 0.9);
+}
+
+.entrance__hint {
+  position: absolute;
+  left: 50%;
+  bottom: max(1rem, 2.5dvh);
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  margin: 0;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-pill);
+  background: rgba(74, 13, 18, 0.82);
+  color: #fff4d6;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(40, 8, 4, 0.3);
+  pointer-events: none;
+}
+
+a.entrance__hint {
+  pointer-events: auto;
+}
+
+.entrance__hint-icon {
+  animation: entrance-hint 1.6s var(--ease-in-out) infinite;
+}
+
+@keyframes entrance-hint {
+  50% {
+    transform: translateY(3px);
+  }
+}

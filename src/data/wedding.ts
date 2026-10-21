@@ -66,15 +66,31 @@ export const couple = {
 export const wedding = {
   /** Shown in the hero and the browser tab. */
   hashtag: "#ShaliniAndVignesh",
-  /** ISO date of the muhurtham — drives the countdown. */
-  muhurthamISO: "2026-11-19T09:40:00+05:30",
-  dateLabel: "19 November 2026",
+  /** ISO date of the muhurtham — the date under the foil on the card. */
+  muhurthamISO: "2026-11-13T00:00:00+05:30",
+  /**
+   * Whether the hour in muhurthamISO is the real one. Leave false until
+   * the muhurtham time is fixed — the card then shows the date alone.
+   */
+  muhurthamTimeFixed: false,
+  dateLabel: "13 November 2026",
   city: "Madurai, Tamil Nadu",
   invitationLine:
     "Together with their families, we invite you to share in the joy of our wedding.",
   /** Tamil blessing printed under the hero. Rendered with lang="ta". */
   blessing: "வாழ்க வளமுடன்",
   blessingTranslit: "Vaazhga Valamudan — may you live in abundance",
+};
+
+/** Wording printed on the invitation card and at the temple gate. */
+export const invitation = {
+  /** Greeting over the gopuram before you step inside. */
+  welcome: "Welcome",
+  welcomeLine: "Please step inside",
+  /** Heading at the top of the card, under the kumbham and lamps. */
+  heading: "Wedding Invitation",
+  /** Last line on the card. */
+  closing: "We look forward to celebrating with you",
 };
 
 export const story: StoryChapter[] = [
@@ -172,13 +188,10 @@ export const events: WeddingEvent[] = [
 ];
 
 export const venue = {
-  name: "Sri Meenakshi Mahal",
-  addressLines: [
-    "12 South Chitrai Street",
-    "Madurai Main, Madurai",
-    "Tamil Nadu 625001",
-  ],
-  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Madurai+Tamil+Nadu",
+  name: "G.R.K. Thirumana Mandapam",
+  /** Street address, one line per entry. The card hides it while empty. */
+  addressLines: [] as string[],
+  mapsUrl: "https://maps.app.goo.gl/L8RPCaHL1ks1DcJj9",
   travelNotes: [
     {
       id: "air",

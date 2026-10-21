@@ -1,0 +1,15 @@
+/* Each leaf swings from the point it is folded over the string. */
+.thoranam__leaf {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: thoranam-sway ease-in-out infinite alternate;
+}
+
+@keyframes thoranam-sway {
+  from {
+    transform: rotate(-4deg);
+  }
+  to {
+    transform: rotate(4deg);
+  }
+}

@@ -1,34 +1,18 @@
-import { Nav } from "./components/Nav";
-import { Footer } from "./components/Footer";
-import { Hero } from "./sections/Hero";
-import { Story } from "./sections/Story";
-import { Couple } from "./sections/Couple";
-import { Events } from "./sections/Events";
-import { Gallery } from "./sections/Gallery";
-import { Venue } from "./sections/Venue";
-import { Rsvp } from "./sections/Rsvp";
+import { TempleEntrance } from "./sections/TempleEntrance";
+import { Invitation } from "./sections/Invitation";
 
 export default function App() {
   return (
     <>
-      <a className="skip-link" href="#main">
-        Skip to main content
+      <a className="skip-link" href="#invitation">
+        Skip to the invitation
       </a>
 
-      <span id="top" />
-      <Nav />
-
       <main id="main">
-        <Hero />
-        <Story />
-        <Couple />
-        <Events />
-        <Gallery />
-        <Venue />
-        <Rsvp />
+        {/* Walk in through the gopuram; the card is waiting in the hall. */}
+        <TempleEntrance />
+        <Invitation />
       </main>
-
-      <Footer />
     </>
   );
 }
